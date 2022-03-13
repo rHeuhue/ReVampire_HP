@@ -4,6 +4,7 @@
 # ReVampire HP
 
 ***ReVampire HP gives you the opportunity of more settings and more configurable than others***
+
  	// -
 	// Default: "1.2"
 	ReVampire_HP_Tracker "1.2"
