@@ -140,7 +140,7 @@ public plugin_init()
 	pCvar = create_cvar("revampire_grenade_message", "[Grenade]<br>+<health_points> HP for killing <name>", FCVAR_TYPE, "Hud Message text for grenade kill^n[0] ..::BLOWN <name> UP LEGS::..<br>..::+<health_points> HP::..^n^nDefault is using revampire_message_type ^"1^"")
 	bind_pcvar_string(pCvar, g_eCvars[GRENADE_MESSAGE], charsmax(g_eCvars[GRENADE_MESSAGE]))
 
-	AutoExecConfig(true, "ReVampireHP", "ReVampireHP_Config")
+	AutoExecConfig(true, "ReVampireHP", "HuehuePlugins_Config")
 
 	g_iSyncHudMsg = CreateHudSyncObj()
 
