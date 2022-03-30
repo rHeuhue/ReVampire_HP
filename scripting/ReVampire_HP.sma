@@ -1,7 +1,7 @@
 #include <amxmodx>
 #include <reapi>
 
-new const PLUGIN_VERSION[] = "1.2"
+new const PLUGIN_VERSION[] = "1.2.1"
 
 const MAX_COLORS_LENGTH = 64
 const MAX_MESSAGE_LENGTH = 128
@@ -175,8 +175,9 @@ public RG__CBasePlayer_Killed(iVictim, iKiller, iShouldGib)
 	if (iVictim == iKiller || !is_user_connected(iKiller))
 		return HC_CONTINUE
 
-	new Float:flHealthKiller, Float:flHealthAdd
+	new Float:flHealthKiller, Float:flHealthAdd, pActiveItem
 	get_entvar(iKiller, var_health, flHealthKiller)
+	pActiveItem = get_member(iKiller, m_pActiveItem)
 
 	if (flHealthKiller >= g_eCvars[MAX_HEALTH])
 		return HC_CONTINUE
@@ -194,7 +195,7 @@ public RG__CBasePlayer_Killed(iVictim, iKiller, iShouldGib)
 		else
 			ShowSyncHudMsg(iKiller, g_iSyncHudMsg, g_eCvars[HEADSHOT_MESSAGE], iVictim, flHealthAdd)
 	}
-	else if (get_member(get_member(iKiller, m_pActiveItem), m_iId) == WEAPON_KNIFE && iShouldGib)
+	else if (!is_nullent(pActiveItem) && get_member(pActiveItem, m_iId) == WEAPON_KNIFE && iShouldGib)
 	{
 		flHealthAdd = g_eCvars[KNIFE_KILL]
 		if (g_eCvars[MESSAGE_TYPE])
