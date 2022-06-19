@@ -54,7 +54,7 @@ new g_eCvars[AllCvars], g_iSyncHudMsg, g_iScreenFade_Msg, g_iScreenShake_Msg
 
 const FFADE_IN = 0x0000		// Just here so we don't pass 0 into the function
 
-const FCVAR_TYPE = FCVAR_SPONLY|FCVAR_PROTECTED
+const FCVAR_TYPE = FCVAR_NONE
 
 public plugin_init()
 {
