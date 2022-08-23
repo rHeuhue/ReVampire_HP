@@ -34,10 +34,11 @@
 	revampire_grenade_kill "20"
 
 	// Maximum Health to be reached from Player
+	// If the cvar is set to 0 it will take automatically default max health of player
 	// -
-	// Default: "100"
-	// Minimum: "1.000000"
-	revampire_max_health "100"
+	// Default: "100.0"
+	// Minimum: "0.000000"
+	revampire_max_health "100.0"
 
 	// Hud Message Basic colors RGBA [Red, Green, Blue, Alpha]
 	// For Random colors type in: random
