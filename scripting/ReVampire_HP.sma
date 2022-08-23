@@ -1,7 +1,7 @@
 #include <amxmodx>
 #include <reapi>
 
-new const PLUGIN_VERSION[] = "1.2.1"
+new const PLUGIN_VERSION[] = "1.2.2"
 
 const MAX_COLORS_LENGTH = 64
 const MAX_MESSAGE_LENGTH = 128
@@ -77,7 +77,7 @@ public plugin_init()
 	pCvar = create_cvar("revampire_grenade_kill", "20", FCVAR_TYPE, "Receiving Health for grenade kill", true, 1.0)
 	bind_pcvar_float(pCvar, g_eCvars[GRENADE_KILL])
 
-	pCvar = create_cvar("revampire_max_health", "100", FCVAR_TYPE, "Maximum Health to be reached from Player", true, 1.0)
+	pCvar = create_cvar("revampire_max_health", "100.0", FCVAR_TYPE, "Maximum Health to be reached from Player^nIf the cvar is set to 0 it will take automatically default max health of player", true, 0.0)
 	bind_pcvar_float(pCvar, g_eCvars[MAX_HEALTH])
 
 	pCvar = create_cvar("revampire_hud_message_colors", "0 255 0 200", FCVAR_TYPE, "Hud Message Basic colors RGBA [Red, Green, Blue, Alpha]^nFor Random colors type in: random", true, 0.0, true, 255.0)
@@ -169,7 +169,6 @@ public OnConfigsExecuted()
 	GenerateNewColors()
 }
 
-
 public RG__CBasePlayer_Killed(iVictim, iKiller, iShouldGib)
 {
 	if (iVictim == iKiller || !is_user_connected(iKiller))
@@ -179,7 +178,7 @@ public RG__CBasePlayer_Killed(iVictim, iKiller, iShouldGib)
 	get_entvar(iKiller, var_health, flHealthKiller)
 	pActiveItem = get_member(iKiller, m_pActiveItem)
 
-	if (flHealthKiller >= g_eCvars[MAX_HEALTH])
+	if (flHealthKiller >= (g_eCvars[MAX_HEALTH] > 0.0 ? g_eCvars[MAX_HEALTH] : get_entvar(iKiller, var_max_health)))
 		return HC_CONTINUE
 
 	if (equal(g_eCvars[HUD_COLORS], "random") || equal(g_eCvars[HUD_COLORS_NEW], "random") || equal(g_eCvars[SCREENFADE_COLORS], "random"))
@@ -242,7 +241,7 @@ public RG__CBasePlayer_Killed(iVictim, iKiller, iShouldGib)
 		message_end() // Message Ends
 	}
 
-	set_entvar(iKiller, var_health, floatclamp(flHealthKiller + flHealthAdd, flHealthKiller, g_eCvars[MAX_HEALTH]))
+	set_entvar(iKiller, var_health, floatclamp(flHealthKiller + flHealthAdd, flHealthKiller, (g_eCvars[MAX_HEALTH] > 0.0 ? g_eCvars[MAX_HEALTH] : get_entvar(iKiller, var_max_health))))
 
 	return HC_CONTINUE
 }
